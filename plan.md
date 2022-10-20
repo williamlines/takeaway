@@ -1,4 +1,4 @@
-# {{PROBLEM}} Multi-Class Planned Design Recipe
+# {{PROBLEM}} Takeaway Design Plan
 
 ## 1. Describe the Problem
 As a customer
@@ -21,10 +21,7 @@ I would like to receive a text such as "Thank you! Your order was placed and wil
 
 ## 2. Design the Class System
 
-_Consider diagramming out the classes and their relationships. Take care to
-focus on the details you see as important, not everything. The diagram below
-uses asciiflow.com but you could also use excalidraw.com, draw.io, or miro.com_
-
+made with asciiflow.com
 ```
                    INTERACTIVE MENU
 ┌──────────────────────────────────────────────────┐
@@ -86,7 +83,7 @@ uses asciiflow.com but you could also use excalidraw.com, draw.io, or miro.com_
 └──────────────────────────────────────────────────┘
 ```
 
-_Also design the interface of each class in more detail._
+## In more detail:
 
 ```ruby
 class InteractiveMenu
@@ -136,42 +133,105 @@ class Order
   def confirmation_text
     # sends confirmation text with delivery time
   end
+
+  def format_symbol(symbol)
+    # converts symbol e.g :prawn_curry => "Prawn curry"
+  end
+
+  def format_price(price)
+    # converts price to readable e.g 550 => "£5.50"
+  end
+  
+  def format_time
+    # formats current @time_placed to readable format e.g 2022-10-20 16:16:53.303608 +0100 => 16:16
+  end
 end
 ```
 
-## 3. Create Examples as Integration Tests
+## Example Integration Tests (TODO)
 
-_Create examples of the classes being used together in different situations and
-combinations that reflect the ways in which the system will be used._
+
 
 ```ruby
-# EXAMPLE
+# Interactive menu can display menu
+  menu = InteractiveMenu.new
+  menu.display_menu => "....."
 
-# Gets all tracks
-library = MusicLibrary.new
-track_1 = Track.new("Carte Blanche", "Veracocha")
-track_2 = Track.new("Synaesthesia", "The Thrillseekers")
-library.add(track_1)
-library.add(track_2)
-library.all # => [track_1, track_2]
+
 ```
 
-## 4. Create Examples as Unit Tests
+## Example as Unit Tests
 
 _Create examples, where appropriate, of the behaviour of each relevant class at
 a more granular level of detail._
 
 ```ruby
-# EXAMPLE
+# Order constructs
+order = Order.new
+order.order => {}
+order.time_placed => # 0
 
-# Constructs a track
-track = Track.new("Carte Blanche", "Veracocha")
-track.title # => "Carte Blanche"
+# order can add new item 
+order = Order.new
+order.add_to_order(:prawn_curry)
+order.order => {:prawn_curry : 1}
+
+# order can add new item multiple times
+order = Order.new
+order.add_to_order(:prawn_curry)
+order.order => # {:prawn_curry : 1}
+order.add_to_order(:prawn_curry)
+order.order => # {:prawn_curry : 2}
+
+# order can add multiple new items
+order = Order.new
+order.add_to_order(:prawn_curry)
+order.order => # {:prawn_curry : 1}
+order.add_to_order(:chilli_beef)
+order.order => # {:prawn_curry : 1, :chilli_beef : 1}
+
+# testing symbol formatter
+order = Order.new
+order.format_symbol(:prawn_curry) => # "Prawn curry"
+order.format_symbol(:this_symbol_is_way_longer_than_usual) => # "This symbol is way longer than usual"
+
+# test price formatter
+order = Order.new
+order.format_price(100) => # "£1"
+order.format_price(550) => # "£5.50"
+order.format_price(123) => # "£1.23"
+order.format_price (10033) => # "£100.33"
+
+# can view order when empty
+order = Order.new
+order.view_order => # "Order is empty: add something!"
+
+# can view order when not empty
+order = Order.new
+order.add_to_order(:prawn_curry)
+order.add_to_order(:chilli_beef)
+order.add_to_order(:prawn_curry)
+order.view_order => # "Your order:\nPrawn curry x 2 -- £11\nChilli beef x 1 -- £5.50\n******\nGrand total: £16.50"
+
+# testing order time setting and returning
+order = Order.new
+order.time_placed => # 0
+order.set_order_time
+order.time_placed => # 2022-10-20 16:16:53.303608 +0100
+
+# testing format_time
+order = Order.new
+order.set_order_time # time is 2022-10-20 16:16:53.303608 +0100
+order.format_time => # 16:16
+
+# testing delivery time
+order = Order.new
+order.set_order_time # time is 2022-10-20 16:16:53.303608 +0100
+order.delivery_time => # 16:46
 ```
 
-_Encode each example as a test. You can add to the above list as you go._
 
-## 5. Implement the Behaviour
 
-_After each test you write, follow the test-driving process of red, green,
-refactor to implement the behaviour._
+## Implement the Behaviour
+
+# Repeat the Testing => Implementation loop
