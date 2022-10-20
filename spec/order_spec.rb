@@ -31,4 +31,16 @@ RSpec.describe Order do
         chilli_beef: 2})
     end
   end
+  context "testing formatters" do
+    it "testing symbol formatter" do
+      order = Order.new
+      expect(order.format_symbol(:prawn_curry)).to eq "Prawn curry"
+      expect(order.format_symbol(:this_symbol_is_way_longer_than_usual)).to eq "This symbol is way longer than usual"
+    end
+    xit "testing price formatter" do
+      order = Order.new
+      expect(order.format_price(100)).to eq "£1"
+      expect(order.format_price(550)).to eq "£5.50"
+    end
+  end
 end
