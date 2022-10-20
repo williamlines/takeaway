@@ -89,31 +89,52 @@ uses asciiflow.com but you could also use excalidraw.com, draw.io, or miro.com_
 _Also design the interface of each class in more detail._
 
 ```ruby
-class MusicLibrary
+class InteractiveMenu
   def initialize
-    # ...
+    # @dishes = {:prawn_curry : 550 ...} key = dish, value = price
   end
 
-  def add(track) # track is an instance of Track
-    # Track gets added to the library
-    # Returns nothing
+  def run
+    #runs program using other methods
   end
 
-  def all
-    # Returns a list of track objects
-  end
-  
-  def search_by_title(keyword) # keyword is a string
-    # Returns a list of tracks with titles that include the keyword
+  def display_menu
+    #displays menu
   end
 end
 
-class Track
-  def initialize(title, artist) # title and artist are both strings
+class Order
+  def initialize
+    # @order = {:prawn_curry : 1} hash key = dish, value = quantity
+    # @time_placed = 0     time order placed initially zero
   end
 
-  def format
-    # Returns a string of the form "TITLE by ARTIST"
+  def add_to_order(item)
+    # adds item to order
+  end
+
+  def view_order 
+    # displays order with dishes, quantity and total price
+  end
+  
+  def set_order_time
+    # updates @time_placed to current time
+  end
+
+  def time_placed
+    # return @time_placed
+  end
+
+  def order
+    # return @order
+  end
+
+  def delivery_time
+    # calculates est. time to delivery
+  end
+
+  def confirmation_text
+    # sends confirmation text with delivery time
   end
 end
 ```
