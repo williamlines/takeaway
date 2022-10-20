@@ -166,24 +166,24 @@ _Create examples, where appropriate, of the behaviour of each relevant class at
 a more granular level of detail._
 
 ```ruby
-# Order constructs
+# Order constructs DONE
 order = Order.new
 order.order => {}
 order.time_placed => # 0
 
-# order can add new item 
+# order can add new item DONE
 order = Order.new
 order.add_to_order(:prawn_curry)
 order.order => {:prawn_curry : 1}
 
-# order can add new item multiple times
+# order can add new item multiple times DONE
 order = Order.new
 order.add_to_order(:prawn_curry)
 order.order => # {:prawn_curry : 1}
 order.add_to_order(:prawn_curry)
 order.order => # {:prawn_curry : 2}
 
-# order can add multiple new items
+# order can add multiple new items DONE
 order = Order.new
 order.add_to_order(:prawn_curry)
 order.order => # {:prawn_curry : 1}
