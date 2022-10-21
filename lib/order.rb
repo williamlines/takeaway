@@ -17,20 +17,16 @@ class Order
     return @order
   end
 
-  def view_order 
-    # displays order with dishes, quantity and total price
-  end
-
   def time_placed
     return @time_placed
   end
 
-  def set_order_time
-    # updates @time_placed to current time
+  def set_order_time(time)
+    @time_placed = time
   end
 
   def delivery_time
-    # calculates est. time to delivery
+    format_time(time_placed + 30*60)
   end
 
   def confirmation_text
@@ -41,11 +37,13 @@ class Order
     symbol.to_s.capitalize.split("_").join(" ")
   end
 
-  def format_price(price)
-    
+  def format_price(price) # price is integer in pence
+    pounds = (price / 100.0)
+    pounds = sprintf('%.2f', pounds)
+    return "£#{pounds}"
   end
   
-  def format_time
-    # formats current @time_placed to readable format e.g 2022-10-20 16:16:53.303608 +0100 => 16:16
+  def format_time(time)
+    time.to_s.split(" ")[1].split(":").first(2).join(":")
   end
 end

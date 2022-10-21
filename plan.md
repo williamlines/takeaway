@@ -98,6 +98,10 @@ class InteractiveMenu
   def display_menu
     #displays menu
   end
+
+  def view_order(order) 
+    # displays order with dishes, quantity and total price
+  end
 end
 
 class Order
@@ -158,6 +162,18 @@ end
   menu.display_menu => "....."
 
 
+# can view order when empty
+order = Order.new
+order.view_order => # "Order is empty: add something!"
+
+# can view order when not empty
+order = Order.new
+order.add_to_order(:prawn_curry)
+order.add_to_order(:chilli_beef)
+order.add_to_order(:prawn_curry)
+order.view_order => # "Your order:\nPrawn curry x 2 -- £11\nChilli beef x 1 -- £5.50\n******\nGrand total: £16.50"
+
+
 ```
 
 ## Example as Unit Tests
@@ -190,41 +206,31 @@ order.order => # {:prawn_curry : 1}
 order.add_to_order(:chilli_beef)
 order.order => # {:prawn_curry : 1, :chilli_beef : 1}
 
-# testing symbol formatter
+# testing symbol formatter DONE
 order = Order.new
 order.format_symbol(:prawn_curry) => # "Prawn curry"
 order.format_symbol(:this_symbol_is_way_longer_than_usual) => # "This symbol is way longer than usual"
 
-# test price formatter
+# test price formatter DONE
 order = Order.new
 order.format_price(100) => # "£1"
 order.format_price(550) => # "£5.50"
 order.format_price(123) => # "£1.23"
 order.format_price (10033) => # "£100.33"
 
-# can view order when empty
-order = Order.new
-order.view_order => # "Order is empty: add something!"
 
-# can view order when not empty
-order = Order.new
-order.add_to_order(:prawn_curry)
-order.add_to_order(:chilli_beef)
-order.add_to_order(:prawn_curry)
-order.view_order => # "Your order:\nPrawn curry x 2 -- £11\nChilli beef x 1 -- £5.50\n******\nGrand total: £16.50"
-
-# testing order time setting and returning
+# testing order time setting and returning DONE
 order = Order.new
 order.time_placed => # 0
 order.set_order_time
 order.time_placed => # 2022-10-20 16:16:53.303608 +0100
 
-# testing format_time
+# testing format_time DONE
 order = Order.new
 order.set_order_time # time is 2022-10-20 16:16:53.303608 +0100
 order.format_time => # 16:16
 
-# testing delivery time
+# testing delivery time DONE
 order = Order.new
 order.set_order_time # time is 2022-10-20 16:16:53.303608 +0100
 order.delivery_time => # 16:46
