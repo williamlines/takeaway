@@ -28,7 +28,16 @@ class InteractiveMenu
     return menu_string
   end
   
-  def view_order 
-    "Order is empty: add something!"
+  def view_order(order) 
+    return "Order is empty: add something!" if order.order == {}
+    
+    order_string = "Your order:"
+    grand_total = 0
+    order.order.each do |item, quantity|
+      grand_total += (@menu[item] * quantity)
+      order_string <<"\n#{format_symbol(item)} x #{quantity} -- #{format_price(@menu[item] * quantity)}" 
+    end
+    return "#{order_string}\n******\nGrand total: #{format_price(grand_total)}"
+    
   end
 end

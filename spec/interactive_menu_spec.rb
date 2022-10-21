@@ -19,4 +19,18 @@ RSpec.describe InteractiveMenu do
       expect(menu.format_price(10033)).to eq "£100.33"
     end
   end
+  context "viewing orders" do
+    it "can view an order that is empty and return a message" do
+      menu = InteractiveMenu.new
+      order = double(:order)
+      allow(order).to receive(:order).and_return({})
+      expect(menu.view_order(order)).to eq "Order is empty: add something!"
+    end
+    it "can view a non empty order and return the formatted order" do
+      menu = InteractiveMenu.new
+      order = double(:order)
+      allow(order).to receive(:order).and_return({prawn_curry: 2, chilli_beef: 1})
+      expect(menu.view_order(order)).to eq "Your order:\nPrawn curry x 2 -- £11.00\nChilli beef x 1 -- £5.50\n******\nGrand total: £16.50"
+    end
+  end
 end
